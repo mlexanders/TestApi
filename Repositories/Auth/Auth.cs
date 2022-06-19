@@ -5,26 +5,41 @@ using System.Threading.Tasks;
 using System.Text;
 
 
-namespace TestApi.Repositories.Auth
+
+namespace TestApi.Repositories
 {
     public class Auth
     {
-        private static HttpClient client = new();
-        private static string ServerRoot = "http://localhost:8080/api/byToken";
-        private static string token = "Fp9u5dsvcdM3XIm";
+        //private static HttpClient client = new();
+        private static readonly string BaseUrl = "http://localhost:8080/api";
+        private static readonly string token = "Fp9u5dsvcdM3XIm";
 
 
-        public static async Task<string> PostAuthByToken()
+        public static async Task<string> PostAuthByToken(HttpClient client)
         {
 
             try
             {
                 var data = new StringContent(token, Encoding.UTF8);
-                var httpResponse = await client.PostAsync(ServerRoot, data);
+                var httpResponse = await client.PostAsync(BaseUrl + "/auth/byToken", data);
 
                 var result = await httpResponse.Content.ReadAsStringAsync();
-                Console.WriteLine(result);
+                //Console.WriteLine(result);
                 return result;
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message.ToString());
+            }
+            return null;
+        }
+
+        public static async Task GetLogApiToken(HttpClient client)
+        {
+
+            try
+            {
+                HttpResponseMessage httpResponse = await client.GetAsync(BaseUrl + "/auth");
             }
             catch (Exception x)
             {
@@ -32,11 +47,9 @@ namespace TestApi.Repositories.Auth
             }
             finally
             {
-                client.Dispose();
+                //client.Dispose();
             }
-            return null;
         }
-
 
     }
 }
