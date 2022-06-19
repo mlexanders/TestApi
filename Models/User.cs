@@ -6,6 +6,14 @@ namespace TestApi.Models
 {
     public class User
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Login { get; set; }
+        public Password Password { get; set; } 
+        public string Token { get; set; }
+        public Role Role { get; set; }
+        public List<Note> Notes { get; set; } // тут коллекция записок или просто поле для записки???
+
         public User()
         {
             Id = 900;
@@ -13,13 +21,12 @@ namespace TestApi.Models
             Login = "looop";
             Password = new Password();
         }
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Login { get; set; }
-        public Password Password { get; set; } 
-        public string Token { get; set; }
-        public string? Role { get; set; } = "user";
-        public List<Note>? Notes { get; set; } // тут коллекция записок или просто поле для записки???
+    }
+
+    public enum Role
+    {
+        USER,
+        ADMIN
     }
 
     public class Password

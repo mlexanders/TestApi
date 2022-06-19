@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using TestApi.Repositories;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using TestApi.Models;
-using Newtonsoft.Json;
+using TestApi.Repositories;
 
 
 
@@ -11,26 +11,13 @@ namespace TestApi
 {
     class Program
     {
-        
+
         static async Task Main(string[] args)
         {
-            HttpClient token = new();
-            var a = await Auth.PostAuthByToken(token);
-           // Console.WriteLine(a);
+            var dayRepository = new DayRepository();
+            var days = await dayRepository.Get();
 
-            await Auth.GetLogApiToken(token);
-
-
-            User us = new User();
-            Console.WriteLine(await UserRepositories.PostRequestJson(JsonConvert.SerializeObject(us) ,"/users/createAll"));
-           
-    
-
-
-
-           Console.WriteLine("END");
-            //Console.ReadLine();
-
+            days.ForEach(d => Console.WriteLine(d.Date));
         }
     }
 }

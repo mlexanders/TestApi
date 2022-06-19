@@ -10,12 +10,12 @@ namespace TestApi.Repositories
 {
     public class Auth
     {
-        //private static HttpClient client = new();
+        private static HttpClient client = new();
         private static readonly string BaseUrl = "http://localhost:8080/api";
         private static readonly string token = "Fp9u5dsvcdM3XIm";
 
 
-        public static async Task<string> PostAuthByToken(HttpClient client)
+        public static async Task<string> PostAuthByToken()
         {
 
             try
@@ -34,7 +34,7 @@ namespace TestApi.Repositories
             return null;
         }
 
-        public static async Task GetLogApiToken(HttpClient client)
+        public static async Task GetLogApiToken()
         {
 
             try
