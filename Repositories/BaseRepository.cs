@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Net.Http.Json;
 
 namespace TestApi.Repositories
 {
@@ -30,14 +29,13 @@ namespace TestApi.Repositories
         {
             HttpResponseMessage httpResponse = await httpClient.GetAsync(Root + "/" + key);
             if (httpResponse.IsSuccessStatusCode)
-            {
-                Console.WriteLine(await httpResponse.Content.ReadAsStringAsync());
+            {     
                 return await Deserialize<TEntity>(httpResponse);
             }
-            throw new Exception("Get(TKey key) - StatusCode - " 
+            throw new Exception("Get(TKey key): - StatusCode - " 
                                 +  httpResponse.StatusCode 
-                                + " Content = " 
-                                +  await httpResponse.Content.ReadAsStringAsync() );          //return await Deserialize<List<TEntity>>(httpResponse);
+                                + " Content - " 
+                                +  await httpResponse.Content.ReadAsStringAsync() );         
 
         }
         public async Task<List<TEntity>> Get()
@@ -45,14 +43,12 @@ namespace TestApi.Repositories
             HttpResponseMessage httpResponse = await httpClient.GetAsync(Root);
             if (httpResponse.IsSuccessStatusCode)
             {
-                Console.WriteLine(await httpResponse.Content.ReadAsStringAsync());
                 return await Deserialize<List<TEntity>>(httpResponse);
-
             }
-            throw new Exception("Get() - StatusCode - "
+            throw new Exception("Get(): - StatusCode - "
                                 + httpResponse.StatusCode
-                                + " Content = "
-                                + await httpResponse.Content.ReadAsStringAsync()); //return await Deserialize<List<TEntity>>(httpResponse);
+                                + " Content - "
+                                + await httpResponse.Content.ReadAsStringAsync()); 
         }
 
         public async Task<HttpResponseMessage> Delete(TKey key)
@@ -60,6 +56,11 @@ namespace TestApi.Repositories
             HttpResponseMessage httpResponse = await httpClient.DeleteAsync(Root + "/" + key);
             return httpResponse;
         }
+        //public async Task<HttpResponseMessage> Delete(List<TKey> key)
+        //{
+        //    HttpResponseMessage httpResponse = await httpClient.DeleteAsync(Root); ?
+        //    return httpResponse;
+        //}
 
         public async Task<HttpResponseMessage> Update(TKey key, TEntity item)
         {
@@ -77,16 +78,9 @@ namespace TestApi.Repositories
 
         public async Task<HttpResponseMessage> Post(TEntity item)
         {
-            //var json = new StringContent(JsonConvert.SerializeObject(item), Encoding.Default, "application/json"); // PutAsJsonAsync
-            //HttpResponseMessage httpResponse = await httpClient.PutAsJsonAsync(Root, json); // 
-
             var json = JsonConvert.SerializeObject(item);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            
-            //using var client = new HttpClient();
-
             var httpResponse = await httpClient.PostAsync(Root, data);
-
             return httpResponse;
         }
         
@@ -99,7 +93,7 @@ namespace TestApi.Repositories
                 var jsonRequest = await httpResponse.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<T>(jsonRequest);
             }
-            throw new Exception("Хрень");
+            throw new Exception("Deserialize: Печаль");
         }
     }
 }

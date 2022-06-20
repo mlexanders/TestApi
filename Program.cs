@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TestApi.Models;
@@ -14,141 +15,89 @@ namespace TestApi
 
         static async Task Main(string[] args)
         {
-            //var dayRepository = new DayRepository();
-            //var days = await dayRepository.Get();
-           
-
             //var startRep = new StartModelsRepository();
             //var start = await startRep.Get();
 
-            // Get
+            // Get() all
+            var usersRep = new UserRepository();
+            var users = await usersRep.Get();
+            SendUsers(users);
+
+
+            // Get(id) 
             var userRep = new UserRepository();
-            var user = await userRep.Get();
-
-
-
-
-
-
-
-
-            //Console.WriteLine(user.Id);
-            //Console.WriteLine(user.Login);
-            //Console.WriteLine(user.Name);
-            //Console.WriteLine(user.Role);
-            //Console.WriteLine("");
-
-            for (int i = 0; i < user.Count; i++)
-            {
-                Console.WriteLine(user[i].Id);
-                Console.WriteLine(user[i].Login);
-                Console.WriteLine(user[i].Name);
-                Console.WriteLine(user[i].Role);
-                Console.WriteLine(user[i].Password);
-            }
+            var user = await usersRep.Get(users[users.Count-1].Id);
+            SendUser(user);
 
 
             //POST
+            var newUser = new PostUser();
+            var pass = new Password();
+            newUser.password = pass;
 
-            //var newUser = new PostUser();
-            //var pass = new Password();
-
-
-            //Console.WriteLine("");
-
-            //Console.WriteLine("login = " + newUser.login);
-            //Console.WriteLine("name = " + newUser.name);
-            //Console.WriteLine("role = " + newUser.role);
-            //Console.WriteLine("password.Id = " + newUser.password.Id);
-            //Console.WriteLine("password.Value = " + newUser.password.Value);
-            //Console.WriteLine("");
-
-            //var newUserREp = new PostUserRepository();
-            //var res = await newUserREp.Post(newUser);
-
-            //Console.WriteLine("resp = " + res.StatusCode);
+            var newUserRepository = new PostUserRepository();
+            var response = await newUserRepository.Post(newUser);
+            Console.WriteLine("POST: response = " + response.StatusCode);
 
 
-
-
-
-            // user = await userRep.Get();
-
-
-            //for (int i = 0; i < user.Count; i++)
-            //{
-            //    Console.WriteLine(user[i].Id);
-            //    Console.WriteLine(user[i].Login);
-            //    Console.WriteLine(user[i].Name);
-            //    Console.WriteLine(user[i].Role);
-            //    Console.WriteLine(user[i].Password);
-            //}
-
-
-
-
-            //Console.WriteLine(user[0].Id);
-            //Console.WriteLine(user[0].Login);
-            //Console.WriteLine(user[0].Name);
-            //Console.WriteLine(user[0].Role);
-            //Console.WriteLine("");
-
-
+            // Get() all
+            users = await usersRep.Get();
+            SendUsers(users);
 
             //UPDATE
+            newUser.name = "boulevard";
+            newUser.login = "Asd@mail.ru";
+            response = await newUserRepository.Update(users[users.Count-1].Id, newUser);
 
-            //var newUser = user[0];
-            //newUser.Name = "Evkakiy123";
-            //newUser.Login = "Rashod123";
+            Console.WriteLine("UPDATE: StatusCode(update) = " + response.StatusCode);
 
-            //var resp = await userRep.Update(user[0].Id, newUser);
-            //Console.WriteLine("StatusCode(update) = " + resp.StatusCode);
-
-
-            //Console.WriteLine(user[0].Id);
-            //Console.WriteLine(user[0].Login);
-            //Console.WriteLine(user[0].Name);
-            //Console.WriteLine(user[0].Role);
-            //Console.WriteLine("");
+            // Get() all
+            users = await usersRep.Get();
+            SendUsers(users);
 
 
-            //DELETE
-
-            //var msg = await userRep.Delete(5);
-            //   Console.WriteLine(msg.StatusCode);
-            //   Console.WriteLine(await msg.Content.ReadAsStringAsync());
-
-
-            ////////
-            //user.Name = "QWERTYlang";
-            //var af = await userRep.Post(user);
-            //Console.WriteLine("StatusCode( Post(user) ) = " + af.StatusCode);
-
-            //user = await userRep.Get(106);
+            ////DELETE
+            //var msg = await userRep.Delete(users[users.Count - 1].Id);
+            //Console.WriteLine("DELETE: StatusCode" + msg.StatusCode);
+            //Console.WriteLine(await msg.Content.ReadAsStringAsync());
 
 
-            //Console.WriteLine(user.Id);
-            //Console.WriteLine(user.Login);
-            //Console.WriteLine(user.Name);
-            //Console.WriteLine(user.Role);
+            // Get() all
+            users = await usersRep.Get();
+            SendUsers(users);
 
-
-
-            //user.ForEach(d => Console.WriteLine(d.Id));
-            //user[106].Name = "WANNNAA";
-            //var res = await userRep.Update(237, user[106]);
-            //Console.WriteLine(res.StatusCode);
-            //for (int i = 0; i < user.Count; i++)
+            ////DELETE all
+            //List<int> list = new();
+            //foreach (var item in users)
             //{
-            //    Console.WriteLine(user[i].Id);
-            //    Console.WriteLine(user[i].Login);
-            //    Console.WriteLine(user[i].Name);
-            //    Console.WriteLine(user[i].Role);
-            //    Console.WriteLine(user[i].Password);
+            //    list.Add(item.Id);
+            //    Console.WriteLine("id is - " + item.Id.ToString());
             //}
-            //int a = Console.Read();
-            //User userID = user[];
+            //var msg = await userRep.Delete(list);
+            //Console.WriteLine("DELETE: StatusCode" + msg.StatusCode);
+            //Console.WriteLine(await msg.Content.ReadAsStringAsync());
+        }
 
+
+        public static void SendUsers(List<User> users)
+        {
+            foreach (var item in users)
+            {
+                Console.WriteLine("Id = " + item.Id);
+                Console.WriteLine("Login = " + item.Login);
+                Console.WriteLine("Name = " + item.Name);
+                Console.WriteLine("Role = " + item.Role);
+                Console.WriteLine();
+            }
+        }
+
+        public static void SendUser(User user)
+        {
+            Console.WriteLine("Id = " + user.Id);
+            Console.WriteLine("Login = " + user.Login);
+            Console.WriteLine("Name = " + user.Name);
+            Console.WriteLine("Role = " + user.Role);
+            Console.WriteLine();
         }
     }
 }

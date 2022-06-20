@@ -18,8 +18,8 @@ namespace TestApi.Models
 
         public PostUser()
         {
-            name = "DJoooooo";
-            login = "qwer@gmail.com";
+            name = "mlexanders";
+            login = "GoGo.com";
             password = new Password();
             role = Role.ADMIN;
 

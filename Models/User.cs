@@ -12,7 +12,7 @@ namespace TestApi.Models
         public Password Password { get; set; } 
         public string Token { get; set; }
         public Role Role { get; set; }
-        public List<Note> Notes { get; set; } // тут коллекция записок или просто поле для записки???
+        public List<Note> Notes { get; set; }
 
         public User()
         {
@@ -35,7 +35,7 @@ namespace TestApi.Models
         public Password()
         {
             Id = 12;
-            Value = "seef322QWERTY";
+            Value = "seef32QWERTY";
         }
     }
 
