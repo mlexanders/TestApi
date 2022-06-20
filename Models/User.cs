@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 
 namespace TestApi.Models
@@ -11,6 +10,7 @@ namespace TestApi.Models
         public string Login { get; set; }
         public Password Password { get; set; } 
         public string Token { get; set; }
+        public long? ChatId { get; set; }
         public Role Role { get; set; }
         public List<Note> Notes { get; set; }
 
@@ -35,40 +35,7 @@ namespace TestApi.Models
         public Password()
         {
             Id = 12;
-            Value = "seef32QWERTY";
+            Value = "QwertyLang";
         }
-    }
-
-    public class Note
-    {
-        public string Discription { get; set; }
-        public DateTime  Day { get; set; }
-        public User User { get; set; }
-
-    }
-
-    public class Day
-    {
-        public int Id { get; set; }
-        public DateTime Date { get; set; }
-        public LessonsAndTimes[] LessonsAndTimes { get; set; }
-        public string Information { get; set; }
-        public Note CurrentUserNote { get; set; }
-
-    }
-
-    public class LessonsAndTimes
-    {
-        public int Id { get; set; }
-        public Lesson Lesson{ get; set; }
-        public DateTime Time { get; set; } //
-    }
-
-    public class Lesson
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Teacher { get; set; }
-        public string Information { get; set; }
-    }
+    }  
 }

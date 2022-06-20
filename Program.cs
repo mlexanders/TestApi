@@ -1,11 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using TestApi.Models;
 using TestApi.Repositories;
-
 
 
 namespace TestApi
@@ -15,76 +12,38 @@ namespace TestApi
 
         static async Task Main(string[] args)
         {
-            //var startRep = new StartModelsRepository();
-            //var start = await startRep.Get();
+            // Post()
+            //PostDay newDay = new PostDay();
 
-            // Get() all
-            var usersRep = new UserRepository();
-            var users = await usersRep.Get();
-            SendUsers(users);
+            //PostDayRepository newDayRepository = new PostDayRepository();
+            //var response = await newDayRepository.Post(newDay);
+            //Console.WriteLine("POST: response = " + response.StatusCode);
 
-
-            // Get(id) 
-            var userRep = new UserRepository();
-            var user = await usersRep.Get(users[users.Count-1].Id);
-            SendUser(user);
+            // GET()
+            var daysRepo = new DayRepository();
+            var days = await daysRepo.Get();
+            SendDays(days);
 
 
-            //POST
-            var newUser = new PostUser();
-            var pass = new Password();
-            newUser.password = pass;
-
-            var newUserRepository = new PostUserRepository();
-            var response = await newUserRepository.Post(newUser);
-            Console.WriteLine("POST: response = " + response.StatusCode);
-
-
-            // Get() all
-            users = await usersRep.Get();
-            SendUsers(users);
-
-            //UPDATE
-            newUser.name = "boulevard";
-            newUser.login = "Asd@mail.ru";
-            response = await newUserRepository.Update(users[users.Count-1].Id, newUser);
-
-            Console.WriteLine("UPDATE: StatusCode(update) = " + response.StatusCode);
-
-            // Get() all
-            users = await usersRep.Get();
-            SendUsers(users);
-
-
-            ////DELETE
-            //var msg = await userRep.Delete(users[users.Count - 1].Id);
-            //Console.WriteLine("DELETE: StatusCode" + msg.StatusCode);
-            //Console.WriteLine(await msg.Content.ReadAsStringAsync());
-
-
-            // Get() all
-            users = await usersRep.Get();
-            SendUsers(users);
-
-            ////DELETE all
-            //List<int> list = new();
-            //foreach (var item in users)
-            //{
-            //    list.Add(item.Id);
-            //    Console.WriteLine("id is - " + item.Id.ToString());
-            //}
-            //var msg = await userRep.Delete(list);
-            //Console.WriteLine("DELETE: StatusCode" + msg.StatusCode);
-            //Console.WriteLine(await msg.Content.ReadAsStringAsync());
         }
 
-
+        public static void SendDays(List<Day> days)
+        {
+            foreach (var item in days)
+            {
+                Console.WriteLine("Id = " + item.Id);
+                Console.WriteLine("Date = " + item.Date);
+                Console.WriteLine("Information = " + item.Information);
+                Console.WriteLine("LessonsAndTimes = " + item.LessonsAndTimes);
+            }
+        }
         public static void SendUsers(List<User> users)
         {
             foreach (var item in users)
             {
                 Console.WriteLine("Id = " + item.Id);
                 Console.WriteLine("Login = " + item.Login);
+                Console.WriteLine("Token = " + item.Token);
                 Console.WriteLine("Name = " + item.Name);
                 Console.WriteLine("Role = " + item.Role);
                 Console.WriteLine();

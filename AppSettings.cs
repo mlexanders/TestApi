@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TestApi
 {
     public static class AppSettings
@@ -12,6 +7,7 @@ namespace TestApi
         public static string BaseRoot { get; } = "http://localhost:8080/api/";
         public static string UsersRoot { get; } = "users";
         public static string DaysRoot { get; } = "days";
-        public static string StartModels { get; } = "start";
+        public static string StartModels { get; } = "start"; 
+        public static string CurrentUsers { get; } = "users/current"; 
     }
 }

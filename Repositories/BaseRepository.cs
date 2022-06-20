@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net.Http.Json;
 
 namespace TestApi.Repositories
 {
@@ -29,15 +30,31 @@ namespace TestApi.Repositories
         {
             HttpResponseMessage httpResponse = await httpClient.GetAsync(Root + "/" + key);
             if (httpResponse.IsSuccessStatusCode)
-            {     
+            {
                 return await Deserialize<TEntity>(httpResponse);
             }
-            throw new Exception("Get(TKey key): - StatusCode - " 
-                                +  httpResponse.StatusCode 
-                                + " Content - " 
-                                +  await httpResponse.Content.ReadAsStringAsync() );         
+            throw new Exception("Get(TKey key): - StatusCode - "
+                                + httpResponse.StatusCode
+                                + " Content - "
+                                + await httpResponse.Content.ReadAsStringAsync());
 
         }
+
+        public async Task<TEntity> GetCurrentUser()
+        {
+            HttpResponseMessage httpResponse = await httpClient.GetAsync(Root);
+            if (httpResponse.IsSuccessStatusCode)
+            {
+                return await Deserialize<TEntity>(httpResponse);
+            }
+            throw new Exception("Get(TKey key): - StatusCode - "
+                                + httpResponse.StatusCode
+                                + " Content - "
+                                + await httpResponse.Content.ReadAsStringAsync());
+        }
+
+
+    
         public async Task<List<TEntity>> Get()
         {
             HttpResponseMessage httpResponse = await httpClient.GetAsync(Root);
@@ -51,18 +68,25 @@ namespace TestApi.Repositories
                                 + await httpResponse.Content.ReadAsStringAsync()); 
         }
 
-        public async Task<HttpResponseMessage> Delete(TKey key)
+        public async Task<HttpResponseMessage> Delete(TKey key) // TEntity?
         {
             HttpResponseMessage httpResponse = await httpClient.DeleteAsync(Root + "/" + key);
             return httpResponse;
         }
-        //public async Task<HttpResponseMessage> Delete(List<TKey> key)
-        //{
-        //    HttpResponseMessage httpResponse = await httpClient.DeleteAsync(Root); ?
-        //    return httpResponse;
-        //}
 
-        public async Task<HttpResponseMessage> Update(TKey key, TEntity item)
+        public async Task<HttpResponseMessage> Delete(List<TKey> key)
+        {
+            HttpRequestMessage httpRequest = new HttpRequestMessage
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(key), Encoding.UTF8, "application/json"),
+                Method = HttpMethod.Delete,
+                RequestUri = Root
+            };
+            
+            return await httpClient.SendAsync(httpRequest);
+        } 
+
+        public async Task<HttpResponseMessage> Update(TKey key, TEntity item) // TEntity?
         {
             TEntity entity = await Get(key);
             if(entity == null)
@@ -84,8 +108,6 @@ namespace TestApi.Repositories
             return httpResponse;
         }
         
-
-
         private async Task<T> Deserialize<T>(HttpResponseMessage httpResponse)
         {
             if (httpResponse.IsSuccessStatusCode)

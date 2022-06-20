@@ -1,29 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TestApi.Models
 {
     public class PostUser
     {
-
         public string name { get; set; }
         public string login { get; set; }
+        public long? ChatId { get; set; }
         public Password password { get; set; }
         public Role role { get; set; }
 
-      
-
         public PostUser()
         {
-            name = "mlexanders";
-            login = "GoGo.com";
+            name = "mlexanders123";
+            login = "GoGo.co123m";
             password = new Password();
             role = Role.ADMIN;
-
-        }
-       
+        }  
     }
 }

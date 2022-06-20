@@ -1,5 +1,4 @@
-﻿
-using TestApi.Models;
+﻿using TestApi.Models;
 
 namespace TestApi.Repositories
 {
