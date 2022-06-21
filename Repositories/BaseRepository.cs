@@ -68,11 +68,24 @@ namespace TestApi.Repositories
                                 + await httpResponse.Content.ReadAsStringAsync()); 
         }
 
-        public async Task<HttpResponseMessage> Delete(TKey key) // TEntity?
+        public async Task<HttpResponseMessage> Delete(TKey key) 
         {
             HttpResponseMessage httpResponse = await httpClient.DeleteAsync(Root + "/" + key);
             return httpResponse;
         }
+
+        //public async Task Delete(TKey key) // TEntity?
+        //{
+        //    HttpResponseMessage httpResponse = await httpClient.DeleteAsync(Root + "/" + key);
+        //    if (httpResponse.IsSuccessStatusCode)
+        //    {
+        //        Console.WriteLine(await httpResponse.Content.ReadAsStringAsync());
+        //    }
+        //    throw new Exception("Delete(): - StatusCode - "
+        //                       + httpResponse.StatusCode
+        //                       + " Content - "
+        //                       + await httpResponse.Content.ReadAsStringAsync());
+        //}
 
         public async Task<HttpResponseMessage> Delete(List<TKey> key)
         {

@@ -24,7 +24,6 @@ namespace TestApi
             var days = await daysRepo.Get();
             SendDays(days);
 
-
         }
 
         public static void SendDays(List<Day> days)
