@@ -14,7 +14,7 @@ namespace TestApi.Models
         {
             Date = new DateTime(2022, 06, 21);
             Information = "Basic information in PostDay";
-            LessonsAndTimes.Add(new PostLessonsAndtimes()); 
+            LessonsAndTimes = new List<PostLessonsAndtimes> { new PostLessonsAndtimes() };
 
         }
     }

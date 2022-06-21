@@ -13,11 +13,11 @@ namespace TestApi
         static async Task Main(string[] args)
         {
             // Post()
-            //PostDay newDay = new PostDay();
+            PostDay newDay = new PostDay();
 
-            //PostDayRepository newDayRepository = new PostDayRepository();
-            //var response = await newDayRepository.Post(newDay);
-            //Console.WriteLine("POST: response = " + response.StatusCode);
+            PostDayRepository newDayRepository = new PostDayRepository();
+            var response = await newDayRepository.Post(newDay);
+            Console.WriteLine("POST: response = " + response.StatusCode);
 
             // GET()
             var daysRepo = new DayRepository();
@@ -33,7 +33,9 @@ namespace TestApi
                 Console.WriteLine("Id = " + item.Id);
                 Console.WriteLine("Date = " + item.Date);
                 Console.WriteLine("Information = " + item.Information);
-                Console.WriteLine("LessonsAndTimes = " + item.LessonsAndTimes);
+                Console.WriteLine("LessonsAndTimes = " + item.LessonsAndTimes[0].Id);
+                Console.WriteLine("LessonsAndTimes = " + item.LessonsAndTimes[0].Lesson);
+                Console.WriteLine("LessonsAndTimes = " + item.LessonsAndTimes[0].Time);
             }
         }
         public static void SendUsers(List<User> users)

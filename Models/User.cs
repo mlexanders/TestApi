@@ -13,13 +13,6 @@ namespace TestApi.Models
         public long? ChatId { get; set; }
         public Role Role { get; set; }
         public List<Note> Notes { get; set; }
-
-        public User()
-        {
-            Name = "Djohny";
-            Login = "looop";
-            Password = new Password();
-        }
     }
 
     public enum Role
