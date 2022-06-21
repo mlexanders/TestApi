@@ -74,7 +74,7 @@ namespace TestApi.Repositories
             return httpResponse;
         }
 
-        //public async Task Delete(TKey key) // TEntity?
+        //public async Task Delete(TKey key) 
         //{
         //    HttpResponseMessage httpResponse = await httpClient.DeleteAsync(Root + "/" + key);
         //    if (httpResponse.IsSuccessStatusCode)
